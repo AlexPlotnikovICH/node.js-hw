@@ -1,0 +1,16 @@
+{
+  "name": "hw5",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:1": "nodemon task1-auth.js",
+    "dev:2": "nodemon task2-error.js",
+    "dev:3": "nodemon task3-methods.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
