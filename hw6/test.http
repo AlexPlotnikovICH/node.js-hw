@@ -1,0 +1,29 @@
+### Тест GET 
+GET http://localhost:3333/
+
+###
+
+### Тест POST 
+POST http://localhost:3333/
+Content-Type: application/json
+
+{
+    "name": "Alex",
+    "goal": "Finish HW6"
+}
+
+### 
+
+### Тест POST 
+POST http://localhost:3333/products
+Content-Type: application/json
+
+{
+    "name": "Laptop", 
+    "price": 1800
+}
+
+###
+
+### Тест GET Products 
+GET http://localhost:3333/products
