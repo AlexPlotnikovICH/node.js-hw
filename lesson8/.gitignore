@@ -1,0 +1,16 @@
+# Зависимости 
+node_modules/
+
+# Секреты 
+.env
+
+# Настройки VS Code 
+.vscode/
+
+# Логи
+*.log
+npm-debug.log*
+
+# Системные файлы
+.DS_Store
+Thumbs.db

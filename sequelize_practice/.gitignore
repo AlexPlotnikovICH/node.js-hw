@@ -1,0 +1,16 @@
+# Игнорируем ВСЕ node_modules, где бы они ни лежали
+node_modules/
+
+# Игнорируем ВСЕ файлы с секретами
+.env
+.env.local
+
+# Игнорируем логи и мусор
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# Настройки редакторов (не навязывай свои вкусы коллегам)
+.vscode/
+.idea/
