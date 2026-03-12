@@ -80,8 +80,31 @@ app.post('/login', async (req, res) => {
   }
 })
 
+app.put('/update-profile', authJWT, (req, res) => {
+  const idFromToken = req.user.userId
 
-app.get("")
+  const { email, name } = req.body
+
+  const userIndex = users.findIndex(u => u.id === idFromToken)
+
+  if (userIndex === -1) {
+    return res.status(404).json({ message: 'User not found in memory' })
+  }
+
+  users[userIndex] = {
+    ...users[userIndex],
+    email: email || users[userIndex].email,
+    name: name || users[userIndex].name,
+  }
+
+  console.log(`профиль пользователя ID ${idFromToken} обновлен в памяти.`)
+
+  res.json({
+    status: 'success',
+    message: 'Profile updated in array',
+    data: users[userIndex],
+  })
+})
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`)
   testConnection()
