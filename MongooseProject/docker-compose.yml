@@ -9,7 +9,7 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - mongo_data_13:/data/db
+      - mongoose_data_final:/data/db
 
 volumes:
   mongoose_data_final:
