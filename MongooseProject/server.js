@@ -1,6 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import 'dotenv/config'
+import Author from './models/Author.js'
+import Book from './models/Book.js'
 const app = express()
 
 const dbURI = process.env.MONGODB_URI
