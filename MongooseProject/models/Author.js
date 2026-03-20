@@ -1,14 +1,8 @@
 import mongoose from 'mongoose'
 
 const authorSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  bio: {
-    type: String,
-    default: 'Биография не указана',
-  },
+  name: { type: String, required: true },
+  bio: { type: String },
 })
 
 const Author = mongoose.model('Author', authorSchema)
