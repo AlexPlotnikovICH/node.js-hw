@@ -8,6 +8,8 @@ import Category from './models/Category.js'
 import Product from './models/Product.js'
 import Course from './models/Course.js'
 import Student from './models/Student.js'
+import Movie from './models/Movie.js'
+import Actor from './models/Actor.js'
 
 const app = express()
 const port = process.env.PORT || 3333
@@ -70,6 +72,46 @@ const seedDatabase = async () => {
           },
         ])
         console.log('✔ Книги: Толкину добавлены 2 тома.')
+      }
+      // --- 4. КИНОИНДУСТРИЯ (ACTORS & MOVIES) ---
+
+      // Сначала ищем или создаем фильм
+      let inception = await Movie.findOne({ title: 'Inception' })
+      if (!inception) {
+        inception = await Movie.create({
+          title: 'Inception',
+          releaseYear: 2010,
+        })
+        console.log('🎬 Кино: Фильм "Начало" снят.')
+      }
+
+      // Ищем или создаем актера №1 (Лео)
+      let leo = await Actor.findOne({ name: 'Leonardo DiCaprio' })
+      if (!leo) {
+        leo = await Actor.create({
+          name: 'Leonardo DiCaprio',
+          birthdate: new Date('1974-11-11'),
+          movies: [inception._id], // Сразу привязываем к фильму
+        })
+
+        // Не забываем про обратную связь!
+        inception.actors.push(leo._id)
+        await inception.save()
+        console.log('🌟 Актер: Лео зачислен в штат "Начала".')
+      }
+
+      // Ищем или создаем актера №2 (Том Харди)
+      let hardy = await Actor.findOne({ name: 'Tom Hardy' })
+      if (!hardy) {
+        hardy = await Actor.create({
+          name: 'Tom Hardy',
+          birthdate: new Date('1977-09-15'),
+          movies: [inception._id],
+        })
+
+        inception.actors.push(hardy._id)
+        await inception.save()
+        console.log('🌟 Актер: Том Харди тоже в деле.')
       }
     }
 
@@ -143,5 +185,21 @@ app.get('/test-students', async (req, res) => {
     res.status(500).json({ error: err.message })
   }
 })
+// для проверки масива в браузере по http://localhost:3333/test-cinema
+app.get('/test-cinema', async (req, res) => {
+  try {
+    const movie = await Movie.findOne({ title: 'Inception' }).populate('actors')
 
+    const actor = await Actor.findOne({ name: 'Leonardo DiCaprio' }).populate(
+      'movies',
+    )
+
+    res.json({
+      movie_cast: movie,
+      actor_filmography: actor,
+    })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
 start()
