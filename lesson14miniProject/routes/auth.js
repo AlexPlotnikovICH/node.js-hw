@@ -1,9 +1,14 @@
-import { Router } from 'express'
-const router = Router()
+import express from 'express'
+const router = express.Router()
+
+// POST /auth/register
 router.post('/register', (req, res) => {
-  res.send('User registred')
+  res.send('Auth: Регистрация работает (заглушка)')
 })
+
+// POST /auth/login
 router.post('/login', (req, res) => {
-  res.send('User logged in!')
+  res.send('Auth: Логин работает (заглушка)')
 })
+
 export default router
