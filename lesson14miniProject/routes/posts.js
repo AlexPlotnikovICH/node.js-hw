@@ -4,22 +4,21 @@ import { getDB } from '../db/index.js'
 
 const router = express.Router()
 
-// 1. ПОЛУЧЕНИЕ ВСЕХ ПОСТОВ (Публичный доступ)
-// Добавляем этот блок, чтобы GET /posts заработал
+// GET /posts — Получение всех сообщений
 router.get('/', async (req, res) => {
   try {
     const db = getDB()
-    // .find({}) — найти всё. .toArray() — превратить в список
+
     const posts = await db.collection('posts').find({}).toArray()
 
     res.status(200).json(posts)
   } catch (error) {
-    console.error('Ошибка при получении постов:', error)
+    console.error('Ошибка при получении списка постов:', error)
     res.status(500).json({ message: 'Error fetching posts' })
   }
 })
 
-// 2. СОЗДАНИЕ ПОСТА (Только с токеном)
+// СОЗДАНИЕ ПОСТА (Только с токеном)
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { title, content } = req.body
@@ -40,7 +39,7 @@ router.post('/', authMiddleware, async (req, res) => {
     await db.collection('posts').insertOne(newPost)
     res.status(201).json({ message: 'Post created', post: newPost })
   } catch (error) {
-    console.error('ПОЛНЫЙ ЛОГ ОШИБКИ:', error)
+    console.error('Create post error:', error.message)
     res
       .status(500)
       .json({ message: 'Error creating post', details: error.message })
