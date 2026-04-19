@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>чатик по ноде</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+      }
+      #messages {
+        list-style-type: none;
+        padding: 0;
+      }
+      #messages li {
+        padding: 8px;
+        margin-bottom: 5px;
+        background: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Чат</h2>
+    <ul id="messages"></ul>
+
+    <input id="m" autocomplete="off" placeholder="Введите сообщение..." />
+    <button id="sendBtn">Отправить</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io()
+
+      const input = document.getElementById('m')
+      const sendBtn = document.getElementById('sendBtn')
+      const messages = document.getElementById('messages')
+
+      sendBtn.addEventListener('click', () => {
+        const text = input.value.trim()
+
+        if (text) {
+          socket.emit('chat message', text)
+          input.value = '' // отчистка поля
+        }
+      })
+
+      socket.on('message confirmation', msg => {
+        const li = document.createElement('li')
+        li.textContent = msg
+        messages.appendChild(li)
+      })
+    </script>
+  </body>
+</html>
